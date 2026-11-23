@@ -1,0 +1,479 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Buy a Cake - Online Cake Store</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: Arial;
+        background: #fff5f5;
+        color: #333;
+      }
+      header {
+        background: #9c2745;
+        color: white;
+        padding: 18px;
+        text-align: center;
+      }
+      nav {
+        background: #64152d;
+        padding: 12px;
+        text-align: center;
+      }
+      nav button {
+        background: white;
+        color: #64152d;
+        border: 0;
+        padding: 10px;
+        margin: 4px;
+        cursor: pointer;
+      }
+      section {
+        background: white;
+        padding: 20px;
+        margin: 20px auto;
+        max-width: 1000px;
+        border-radius: 10px;
+      }
+      input,
+      select,
+      textarea {
+        padding: 10px;
+        margin: 7px;
+        width: 90%;
+        max-width: 350px;
+      }
+      button {
+        background: #a83255;
+        color: white;
+        border: 0;
+        padding: 10px 16px;
+        margin: 5px;
+        cursor: pointer;
+        border-radius: 5px;
+      }
+      button:hover {
+        background: #64152d;
+      }
+      .cakes {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+      }
+      .card {
+        width: 220px;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        text-align: center;
+      }
+      .card img {
+        width: 100%;
+        height: 150px;
+        object-fit: cover;
+        border-radius: 8px;
+      }
+      h2 {
+        color: #9c2745;
+      }
+      .hidden {
+        display: none;
+      }
+      footer {
+        text-align: center;
+        background: #64152d;
+        color: white;
+        padding: 15px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <h1>🎂 BUY A CAKE</h1>
+      <p>Fresh Cakes for Every Celebration</p>
+    </header>
+
+    <nav>
+      <button onclick="show('login')">Login</button>
+      <button onclick="show('register')">Register</button>
+      <button onclick="show('home')">Home</button>
+      <button onclick="show('cart')">My Cart</button>
+      <button onclick="show('orders')">My Orders</button>
+      <button onclick="show('admin')">Admin</button>
+    </nav>
+
+    <!-- LOGIN -->
+    <section id="login">
+      <h2>Login</h2>
+      <select id="role">
+        <option value="student">Customer Login</option>
+        <option value="admin">Admin Login</option></select
+      ><br />
+      <input id="username" placeholder="Username" /><br />
+      <input id="password" type="password" placeholder="Password" /><br />
+      <button onclick="login()">Login</button>
+      <p id="loginMsg"></p>
+    </section>
+
+    <!-- REGISTER -->
+    <section id="register" class="hidden">
+      <h2>Customer Registration</h2>
+      <input placeholder="Full Name" id="regName" /><br />
+      <input placeholder="Email Address" id="regEmail" /><br />
+      <input type="password" placeholder="Password" id="regPass" /><br />
+      <button onclick="register()">Register</button>
+      <p id="regMsg"></p>
+    </section>
+
+    <!-- HOME / CAKE PRODUCTS -->
+    <section id="home" class="hidden">
+      <h2>Available Cakes</h2>
+
+      <input
+        id="search"
+        placeholder="Search cakes..."
+        oninput="displayCakes()"
+      />
+
+      <select id="category" onchange="displayCakes()">
+        <option value="All">All Categories</option>
+        <option value="Birthday">Birthday Cakes</option>
+        <option value="Wedding">Wedding Cakes</option>
+        <option value="Chocolate">Chocolate Cakes</option>
+        <option value="Fruit">Fruit Cakes</option>
+      </select>
+
+      <div class="cakes" id="cakeList"></div>
+    </section>
+
+    <!-- CART -->
+    <section id="cart" class="hidden">
+      <h2>My Shopping Cart</h2>
+      <div id="cartList"></div>
+      <h3 id="total"></h3>
+      <button onclick="show('checkout')">Place Order</button>
+    </section>
+
+    <!-- CHECKOUT -->
+    <section id="checkout" class="hidden">
+      <h2>Delivery Details</h2>
+      <input id="customer" placeholder="Customer Name" /><br />
+      <input id="phone" placeholder="Mobile Number" /><br />
+      <textarea id="address" placeholder="Delivery Address"></textarea><br />
+      <input id="message" placeholder="Cake Message (Optional)" /><br />
+      <select id="size">
+        <option>Small</option>
+        <option>Medium</option>
+        <option>Large</option></select
+      ><br />
+      <select id="payment">
+        <option>Cash on Delivery</option>
+        <option>Online Payment (Demo)</option></select
+      ><br />
+      <button onclick="placeOrder()">Confirm Order</button>
+    </section>
+
+    <!-- MY ORDERS -->
+    <section id="orders" class="hidden">
+      <h2>My Orders</h2>
+      <div id="orderList"></div>
+    </section>
+
+    <!-- ADMIN PANEL -->
+    <section id="admin" class="hidden">
+      <h2>Admin Dashboard</h2>
+
+      <h3>Add New Cake</h3>
+      <input id="cakeName" placeholder="Cake Name" /><br />
+      <input id="cakePrice" type="number" placeholder="Price" /><br />
+      <select id="cakeCategory">
+        <option>Birthday</option>
+        <option>Wedding</option>
+        <option>Chocolate</option>
+        <option>Fruit</option></select
+      ><br />
+      <input id="cakeImage" placeholder="Image URL" /><br />
+      <textarea id="cakeDescription" placeholder="Cake Description"></textarea
+      ><br />
+      <button onclick="addCake()">Add Cake</button>
+
+      <h3>Manage Products</h3>
+      <div id="adminCakes"></div>
+
+      <h3>Manage Customer Orders</h3>
+      <div id="adminOrders"></div>
+    </section>
+
+    <footer>
+      <p>© 2026 Buy A Cake | Online Cake Ordering System</p>
+    </footer>
+
+    <script>
+      let cakes = [
+        {
+          id: 1,
+          name: "Chocolate Cake",
+          category: "Chocolate",
+          price: 600,
+          image: "https://images.unsplash.com/photo-1578985545062-69928b1d9587",
+          description: "Delicious chocolate cream cake.",
+        },
+
+        {
+          id: 2,
+          name: "Birthday Cake",
+          category: "Birthday",
+          price: 800,
+          image: "https://images.unsplash.com/photo-1558636508-e0db3814bd1d",
+          description: "Special birthday celebration cake.",
+        },
+
+        {
+          id: 3,
+          name: "Wedding Cake",
+          category: "Wedding",
+          price: 1500,
+          image: "https://images.unsplash.com/photo-1535254973040-607b474cb50d",
+          description: "Beautiful wedding cake.",
+        },
+
+        {
+          id: 4,
+          name: "Fruit Cake",
+          category: "Fruit",
+          price: 700,
+          image: "https://images.unsplash.com/photo-1464349095431-e9a21285b5f3",
+          description: "Fresh fruit and cream cake.",
+        },
+      ];
+
+      let cart = [];
+      let orders = [];
+      let currentUser = "";
+      let currentRole = "";
+
+      function show(id) {
+        document
+          .querySelectorAll("section")
+          .forEach((s) => s.classList.add("hidden"));
+        document.getElementById(id).classList.remove("hidden");
+
+        if (id === "home") displayCakes();
+        if (id === "cart") displayCart();
+        if (id === "orders") displayOrders();
+        if (id === "admin") displayAdmin();
+      }
+
+      function login() {
+        let u = document.getElementById("username").value;
+        let p = document.getElementById("password").value;
+        let r = document.getElementById("role").value;
+
+        if (!u || !p) {
+          alert("Enter username and password");
+          return;
+        }
+
+        currentUser = u;
+        currentRole = r;
+
+        if (r === "admin") {
+          show("admin");
+        } else {
+          show("home");
+        }
+      }
+
+      function register() {
+        let name = document.getElementById("regName").value;
+        let email = document.getElementById("regEmail").value;
+        let pass = document.getElementById("regPass").value;
+
+        if (!name || !email || !pass) {
+          alert("Fill all details");
+          return;
+        }
+        document.getElementById("regMsg").innerText =
+          "Registration successful! Please login.";
+      }
+
+      function displayCakes() {
+        let category = document.getElementById("category").value;
+        let search = document.getElementById("search").value.toLowerCase();
+
+        let filtered = cakes.filter(
+          (c) =>
+            (category === "All" || c.category === category) &&
+            c.name.toLowerCase().includes(search),
+        );
+
+        document.getElementById("cakeList").innerHTML = filtered
+          .map(
+            (c) => `
+<div class="card">
+<img src="${c.image}" alt="${c.name}">
+<h3>${c.name}</h3>
+<p>${c.description}</p>
+<h3>₹${c.price}</h3>
+<button onclick="addCart(${c.id})">Add to Cart</button>
+</div>`,
+          )
+          .join("");
+      }
+
+      function addCart(id) {
+        let cake = cakes.find((c) => c.id === id);
+        cart.push(cake);
+        alert("Cake added to cart!");
+      }
+
+      function displayCart() {
+        let html = cart
+          .map(
+            (c, i) => `
+<p>${c.name} - ₹${c.price}
+<button onclick="removeCart(${i})">Remove</button></p>
+`,
+          )
+          .join("");
+
+        document.getElementById("cartList").innerHTML = html;
+        document.getElementById("total").innerText =
+          "Total Amount: ₹" + cart.reduce((sum, c) => sum + c.price, 0);
+      }
+
+      function removeCart(i) {
+        cart.splice(i, 1);
+        displayCart();
+      }
+
+      function placeOrder() {
+        if (cart.length === 0) {
+          alert("Cart is empty");
+          return;
+        }
+
+        let name = document.getElementById("customer").value;
+        let phone = document.getElementById("phone").value;
+        let address = document.getElementById("address").value;
+
+        if (!name || !phone || !address) {
+          alert("Enter delivery details");
+          return;
+        }
+
+        let order = {
+          id: Date.now(),
+          user: currentUser,
+          name: name,
+          phone: phone,
+          address: address,
+          items: [...cart],
+          size: document.getElementById("size").value,
+          message: document.getElementById("message").value,
+          payment: document.getElementById("payment").value,
+          total: cart.reduce((s, c) => s + c.price, 0),
+          status: "Order Placed",
+        };
+
+        orders.push(order);
+        cart = [];
+
+        alert("Order placed successfully!");
+        show("orders");
+      }
+
+      function displayOrders() {
+        document.getElementById("orderList").innerHTML =
+          orders
+            .filter((o) => o.user === currentUser)
+            .map(
+              (o) => `
+<div>
+<h3>Order #${o.id}</h3>
+<p>${o.items.map((c) => c.name).join(", ")}</p>
+<p>Total: ₹${o.total}</p>
+<p>Delivery: ${o.address}</p>
+<p>Status: ${o.status}</p>
+</div><hr>`,
+            )
+            .join("") || "No orders found.";
+      }
+
+      function addCake() {
+        let name = document.getElementById("cakeName").value;
+        let price = Number(document.getElementById("cakePrice").value);
+        let image = document.getElementById("cakeImage").value;
+        let category = document.getElementById("cakeCategory").value;
+        let description = document.getElementById("cakeDescription").value;
+
+        if (!name || !price || !image || !description) {
+          alert("Enter all cake details");
+          return;
+        }
+
+        cakes.push({
+          id: Date.now(),
+          name,
+          price,
+          image,
+          category,
+          description,
+        });
+        alert("Cake added successfully!");
+        displayAdmin();
+      }
+
+      function displayAdmin() {
+        document.getElementById("adminCakes").innerHTML = cakes
+          .map(
+            (c) => `
+<p>${c.name} - ₹${c.price}
+<button onclick="deleteCake(${c.id})">Delete</button></p>
+`,
+          )
+          .join("");
+
+        document.getElementById("adminOrders").innerHTML =
+          orders
+            .map(
+              (o) => `
+<div>
+<p>Order #${o.id} - ${o.name}</p>
+<p>Total: ₹${o.total}</p>
+<p>Status: ${o.status}</p>
+<select id="status${o.id}">
+<option>Order Placed</option>
+<option>Preparing</option>
+<option>Shipped</option>
+<option>Delivered</option>
+</select>
+<button onclick="updateStatus(${o.id})">Update Status</button>
+</div><hr>`,
+            )
+            .join("") || "No orders yet.";
+      }
+
+      function deleteCake(id) {
+        cakes = cakes.filter((c) => c.id !== id);
+        displayAdmin();
+      }
+
+      function updateStatus(id) {
+        let order = orders.find((o) => o.id === id);
+        order.status = document.getElementById("status" + id).value;
+        displayAdmin();
+        alert("Order status updated!");
+      }
+
+      show("login");
+    </script>
+  </body>
+</html>

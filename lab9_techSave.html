@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>TechSavvy Online Shopping</title>
+    <style>
+      body {
+        font-family: Arial;
+        margin: 0;
+        background: #f2f4f7;
+      }
+      header {
+        background: #172554;
+        color: white;
+        padding: 18px;
+        text-align: center;
+      }
+      nav {
+        background: #1e40af;
+        padding: 12px;
+        text-align: center;
+      }
+      nav button {
+        margin: 5px;
+        padding: 9px;
+        border: 0;
+        cursor: pointer;
+      }
+      .container {
+        padding: 20px;
+      }
+      .card {
+        background: white;
+        padding: 15px;
+        margin: 10px;
+        border-radius: 8px;
+        display: inline-block;
+        width: 200px;
+        vertical-align: top;
+      }
+      button {
+        background: #2563eb;
+        color: white;
+        border: 0;
+        padding: 9px;
+        cursor: pointer;
+        border-radius: 4px;
+      }
+      input,
+      select,
+      textarea {
+        padding: 9px;
+        margin: 6px;
+        width: 90%;
+      }
+      section {
+        display: none;
+      }
+      #login {
+        display: block;
+        text-align: center;
+        margin: 70px auto;
+        background: white;
+        padding: 25px;
+        width: 300px;
+        border-radius: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>TechSavvy</h1>
+      <p>Your One-Stop Online Gadget Store</p>
+    </header>
+
+    <div id="login">
+      <h2>Login</h2>
+      <input id="username" placeholder="Username" />
+      <input id="password" type="password" placeholder="Password" />
+      <select id="role">
+        <option value="customer">Customer</option>
+        <option value="admin">Admin</option>
+      </select>
+      <button onclick="login()">Login</button>
+      <p>New customer? <button onclick="register()">Register</button></p>
+    </div>
+
+    <div id="shop" style="display: none">
+      <nav>
+        <button onclick="show('home')">Home</button>
+        <button onclick="show('products')">Products</button>
+        <button onclick="show('cart')">Cart</button>
+        <button onclick="show('orders')">My Orders</button>
+        <button onclick="show('wishlist')">Wishlist</button>
+        <button onclick="logout()">Logout</button>
+      </nav>
+
+      <section id="home" style="display: block">
+        <div class="container">
+          <h2>Welcome to TechSavvy</h2>
+          <h3>Popular Categories</h3>
+          <button onclick="filter('Smartphones')">Smartphones</button>
+          <button onclick="filter('Laptops')">Laptops</button>
+          <button onclick="filter('Tablets')">Tablets</button>
+          <button onclick="filter('Accessories')">Accessories</button>
+          <h3>Shop by Category</h3>
+          <p>Smartphones | Laptops | Tablets | Accessories</p>
+          <h3>Special Offers</h3>
+          <p>Get exciting discounts on selected gadgets!</p>
+        </div>
+      </section>
+
+      <section id="products">
+        <div class="container">
+          <h2>Product Catalogue</h2>
+          <input
+            id="search"
+            placeholder="Search products..."
+            oninput="displayProducts()"
+          />
+          <select id="category" onchange="displayProducts()">
+            <option value="All">All Categories</option>
+            <option>Smartphones</option>
+            <option>Laptops</option>
+            <option>Tablets</option>
+            <option>Accessories</option>
+          </select>
+          <div id="productList"></div>
+        </div>
+      </section>
+
+      <section id="cart">
+        <div class="container">
+          <h2>Shopping Cart</h2>
+          <div id="cartList"></div>
+          <h3 id="total"></h3>
+          <button onclick="checkout()">Checkout</button>
+        </div>
+      </section>
+
+      <section id="orders">
+        <div class="container">
+          <h2>My Orders / Order History</h2>
+          <div id="orderList"></div>
+        </div>
+      </section>
+
+      <section id="wishlist">
+        <div class="container">
+          <h2>My Wishlist</h2>
+          <div id="wishList"></div>
+        </div>
+      </section>
+
+      <section id="admin">
+        <div class="container">
+          <h2>Admin Dashboard</h2>
+          <h3>Add Product</h3>
+          <input id="pname" placeholder="Product Name" />
+          <select id="pcat">
+            <option>Smartphones</option>
+            <option>Laptops</option>
+            <option>Tablets</option>
+            <option>Accessories</option>
+          </select>
+          <input id="price" type="number" placeholder="Price" />
+          <input id="description" placeholder="Description" />
+          <input id="stock" type="number" placeholder="Stock Quantity" />
+          <button onclick="addProduct()">Add Product</button>
+          <h3>Manage Products</h3>
+          <div id="adminProducts"></div>
+          <h3>Customer Checkout Information</h3>
+          <div id="customers"></div>
+          <h3>All Orders</h3>
+          <div id="adminOrders"></div>
+          <button onclick="logout()">Logout</button>
+        </div>
+      </section>
+    </div>
+
+    <script>
+      let products = [
+        {
+          id: 1,
+          name: "Samsung Galaxy S25",
+          cat: "Smartphones",
+          price: 75000,
+          desc: "Premium smartphone",
+          stock: 10,
+        },
+        {
+          id: 2,
+          name: "iPhone 17",
+          cat: "Smartphones",
+          price: 80000,
+          desc: "Apple smartphone",
+          stock: 8,
+        },
+        {
+          id: 3,
+          name: "HP Pavilion",
+          cat: "Laptops",
+          price: 65000,
+          desc: "Powerful laptop",
+          stock: 5,
+        },
+        {
+          id: 4,
+          name: "Samsung Tab",
+          cat: "Tablets",
+          price: 30000,
+          desc: "Android tablet",
+          stock: 7,
+        },
+        {
+          id: 5,
+          name: "Wireless Headphones",
+          cat: "Accessories",
+          price: 2500,
+          desc: "Bluetooth headphones",
+          stock: 20,
+        },
+      ];
+
+      let cart = [],
+        wishlist = [],
+        orders = [],
+        customer = "";
+      let admin = false;
+
+      function login() {
+        if (!username.value || !password.value) {
+          alert("Enter login details");
+          return;
+        }
+        customer = username.value;
+        admin = role.value === "admin";
+        document.getElementById("login").style.display = "none";
+        document.getElementById("shop").style.display = "block";
+        if (admin) show("admin");
+        else show("home");
+        displayProducts();
+      }
+
+      function register() {
+        let name = prompt("Enter your name");
+        if (name) {
+          username.value = name;
+          alert("Registration successful. Set your password and login.");
+        }
+      }
+
+      function logout() {
+        document.getElementById("shop").style.display = "none";
+        document.getElementById("login").style.display = "block";
+      }
+
+      function show(id) {
+        document
+          .querySelectorAll("section")
+          .forEach((s) => (s.style.display = "none"));
+        document.getElementById(id).style.display = "block";
+        if (id === "cart") displayCart();
+        if (id === "orders") displayOrders();
+        if (id === "wishlist") displayWishlist();
+        if (id === "admin") displayAdmin();
+      }
+
+      function filter(cat) {
+        show("products");
+        category.value = cat;
+        displayProducts();
+      }
+
+      function displayProducts() {
+        let searchText = document.getElementById("search").value.toLowerCase();
+        let cat = document.getElementById("category").value;
+        productList.innerHTML = "";
+        products
+          .filter(
+            (p) =>
+              (cat === "All" || p.cat === cat) &&
+              p.name.toLowerCase().includes(searchText),
+          )
+          .forEach((p) => {
+            productList.innerHTML += `
+<div class="card">
+<h3>${p.name}</h3>
+<p>Category: ${p.cat}</p>
+<p>${p.desc}</p>
+<p>Price: ₹${p.price}</p>
+<p>Available: ${p.stock}</p>
+<button onclick="addCart(${p.id})">Add to Cart</button>
+<button onclick="addWish(${p.id})">♡ Wishlist</button>
+</div>`;
+          });
+      }
+
+      function addCart(id) {
+        let p = products.find((x) => x.id === id);
+        if (p.stock <= 0) {
+          alert("Out of stock");
+          return;
+        }
+        let item = cart.find((x) => x.id === id);
+        if (item) item.qty++;
+        else cart.push({ ...p, qty: 1 });
+        alert("Added to cart");
+      }
+
+      function displayCart() {
+        cartList.innerHTML = "";
+        let sum = 0;
+        cart.forEach((p) => {
+          sum += p.price * p.qty;
+          cartList.innerHTML += `
+<p>${p.name} - ₹${p.price} 
+<button onclick="changeQty(${p.id},-1)">-</button>
+${p.qty}
+<button onclick="changeQty(${p.id},1)">+</button>
+<button onclick="removeCart(${p.id})">Remove</button></p>`;
+        });
+        total.innerHTML = "Total: ₹" + sum;
+      }
+
+      function changeQty(id, n) {
+        let p = cart.find((x) => x.id === id);
+        let product = products.find((x) => x.id === id);
+        if (n > 0 && p.qty >= product.stock) {
+          alert("Maximum available stock reached");
+          return;
+        }
+        p.qty += n;
+        if (p.qty <= 0) removeCart(id);
+        displayCart();
+      }
+
+      function removeCart(id) {
+        cart = cart.filter((p) => p.id !== id);
+        displayCart();
+      }
+
+      function checkout() {
+        if (cart.length === 0) {
+          alert("Cart is empty");
+          return;
+        }
+        let address = prompt("Enter delivery address");
+        if (!address) return;
+        for (let item of cart) {
+          let p = products.find((x) => x.id === item.id);
+          if (item.qty > p.stock) {
+            alert("Insufficient stock for " + p.name);
+            return;
+          }
+        }
+        let amount = cart.reduce((s, p) => s + p.price * p.qty, 0);
+        cart.forEach((item) => {
+          products.find((p) => p.id === item.id).stock -= item.qty;
+        });
+        orders.push({
+          id: Date.now(),
+          customer,
+          items: cart.map((p) => ({ ...p })),
+          amount,
+          address,
+          status: "Order Placed",
+        });
+        cart = [];
+        alert("Order placed successfully! Total: ₹" + amount);
+        show("orders");
+      }
+
+      function displayOrders() {
+        orderList.innerHTML = "";
+        orders
+          .filter((o) => o.customer === customer)
+          .forEach((o) => {
+            orderList.innerHTML += `<div class="card">
+<h3>Order #${o.id}</h3>
+<p>Amount: ₹${o.amount}</p>
+<p>Address: ${o.address}</p>
+<p>Status: ${o.status}</p>
+</div>`;
+          });
+      }
+
+      function addWish(id) {
+        let p = products.find((x) => x.id === id);
+        if (!wishlist.some((x) => x.id === id)) wishlist.push(p);
+        alert("Added to wishlist");
+      }
+
+      function displayWishlist() {
+        wishList.innerHTML = "";
+        wishlist.forEach((p) => {
+          wishList.innerHTML += `<p>${p.name} - ₹${p.price}
+<button onclick="addCart(${p.id})">Add to Cart</button></p>`;
+        });
+      }
+
+      function addProduct() {
+        let name = pname.value,
+          cat = pcat.value,
+          price = Number(document.getElementById("price").value),
+          desc = description.value,
+          stock = Number(document.getElementById("stock").value);
+        if (!name || price <= 0 || !desc || stock < 0) {
+          alert("Enter valid product details");
+          return;
+        }
+        products.push({ id: Date.now(), name, cat, price, desc, stock });
+        alert("Product added");
+        displayAdmin();
+      }
+
+      function displayAdmin() {
+        adminProducts.innerHTML = "";
+        products.forEach((p) => {
+          adminProducts.innerHTML += `<p>${p.name} - ₹${p.price} - Stock: ${p.stock}
+<button onclick="editProduct(${p.id})">Edit</button>
+<button onclick="deleteProduct(${p.id})">Delete</button></p>`;
+        });
+        customers.innerHTML = [...new Set(orders.map((o) => o.customer))]
+          .map((c) => `<p>${c}</p>`)
+          .join("");
+        adminOrders.innerHTML = "";
+        orders.forEach((o) => {
+          adminOrders.innerHTML += `<p>${o.customer} | Order #${o.id} | ₹${o.amount} | ${o.status}
+<button onclick="updateStatus(${o.id})">Update Status</button></p>`;
+        });
+      }
+
+      function editProduct(id) {
+        let p = products.find((x) => x.id === id);
+        let price = prompt("Enter new price", p.price);
+        let desc = prompt("Enter new description", p.desc);
+        if (price !== null && Number(price) > 0) p.price = Number(price);
+        if (desc !== null) p.desc = desc;
+        displayAdmin();
+      }
+
+      function deleteProduct(id) {
+        if (confirm("Delete this product?")) {
+          products = products.filter((p) => p.id !== id);
+          displayAdmin();
+        }
+      }
+
+      function updateStatus(id) {
+        let status = prompt("Enter status: Shipped / Delivered / Cancelled");
+        if (status) {
+          orders.find((o) => o.id === id).status = status;
+          displayAdmin();
+        }
+      }
+    </script>
+  </body>
+</html>

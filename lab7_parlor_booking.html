@@ -1,0 +1,530 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Beauty Parlour Booking System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: Arial;
+        background: #fff0f5;
+        color: #333;
+      }
+      header {
+        background: #ad4675;
+        color: white;
+        text-align: center;
+        padding: 20px;
+      }
+      nav {
+        background: #702747;
+        padding: 12px;
+        text-align: center;
+      }
+      button {
+        background: #ad4675;
+        color: white;
+        border: 0;
+        padding: 10px 15px;
+        margin: 5px;
+        cursor: pointer;
+        border-radius: 5px;
+      }
+      button:hover {
+        background: #702747;
+      }
+      section {
+        background: white;
+        max-width: 900px;
+        margin: 20px auto;
+        padding: 20px;
+        border-radius: 10px;
+      }
+      input,
+      select,
+      textarea {
+        padding: 10px;
+        margin: 7px;
+        width: 90%;
+        max-width: 350px;
+      }
+      .card {
+        display: inline-block;
+        width: 220px;
+        margin: 10px;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        text-align: center;
+        vertical-align: top;
+      }
+      .card img {
+        width: 100%;
+        height: 130px;
+        object-fit: cover;
+      }
+      h2 {
+        color: #ad4675;
+      }
+      .hidden {
+        display: none;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <h1>💇 BEAUTY PARLOUR</h1>
+      <p>Book Your Beauty Appointment Online</p>
+    </header>
+
+    <nav>
+      <button onclick="show('login')">Login</button>
+      <button onclick="show('register')">Register</button>
+      <button onclick="show('services')">Services</button>
+      <button onclick="show('booking')">Book Appointment</button>
+      <button onclick="show('account')">My Appointments</button>
+      <button onclick="show('feedback')">Feedback</button>
+      <button onclick="show('admin')">Admin</button>
+    </nav>
+
+    <!-- LOGIN -->
+    <section id="login">
+      <h2>Customer / Admin Login</h2>
+      <select id="role">
+        <option value="customer">Customer</option>
+        <option value="admin">Admin</option></select
+      ><br />
+      <input id="username" placeholder="Username" /><br />
+      <input id="password" type="password" placeholder="Password" /><br />
+      <button onclick="login()">Login</button>
+      <p id="loginMsg"></p>
+    </section>
+
+    <!-- REGISTER -->
+    <section id="register" class="hidden">
+      <h2>Customer Registration</h2>
+      <input id="regName" placeholder="Full Name" /><br />
+      <input id="regEmail" placeholder="Email" /><br />
+      <input id="regPass" type="password" placeholder="Password" /><br />
+      <button onclick="register()">Register</button>
+      <p id="regMsg"></p>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="services" class="hidden">
+      <h2>Our Beauty Services</h2>
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035" />
+        <h3>Hair Styling</h3>
+        <p>Hair cutting and styling.</p>
+        <h3>₹500</h3>
+      </div>
+      <div class="card">
+        <img
+          src="https://images.unsplash.com/photo-1512496015851-a90fb38ba796"
+        />
+        <h3>Facial</h3>
+        <p>Skin cleaning and facial treatment.</p>
+        <h3>₹800</h3>
+      </div>
+      <div class="card">
+        <img
+          src="https://images.unsplash.com/photo-1604654894610-df63bc536371"
+        />
+        <h3>Manicure</h3>
+        <p>Nail care and beauty treatment.</p>
+        <h3>₹400</h3>
+      </div>
+      <div class="card">
+        <img
+          src="https://images.unsplash.com/photo-1516975080664-ed2fc6a32937"
+        />
+        <h3>Makeup</h3>
+        <p>Professional party makeup.</p>
+        <h3>₹1500</h3>
+      </div>
+    </section>
+
+    <!-- BOOKING -->
+    <section id="booking" class="hidden">
+      <h2>Book Your Appointment</h2>
+
+      <input id="customerName" placeholder="Customer Name" /><br />
+      <input id="phone" placeholder="Mobile Number" /><br />
+
+      <select id="service">
+        <option value="Hair Styling">Hair Styling - ₹500</option>
+        <option value="Facial">Facial - ₹800</option>
+        <option value="Manicure">Manicure - ₹400</option>
+        <option value="Makeup">Makeup - ₹1500</option></select
+      ><br />
+
+      <select id="stylist">
+        <option>Priya</option>
+        <option>Divya</option>
+        <option>Meena</option></select
+      ><br />
+
+      <label>Select Date:</label><br />
+      <input type="date" id="date" /><br />
+
+      <label>Select Time:</label><br />
+      <select id="time">
+        <option>10:00 AM</option>
+        <option>11:00 AM</option>
+        <option>12:00 PM</option>
+        <option>02:00 PM</option>
+        <option>03:00 PM</option>
+        <option>04:00 PM</option></select
+      ><br />
+
+      <select id="payment">
+        <option>Pay at Salon</option>
+        <option>Online Payment (Demo)</option>
+        <option>Partial Deposit (Demo)</option></select
+      ><br />
+
+      <button onclick="book()">Confirm Appointment</button>
+      <p id="bookingMsg"></p>
+    </section>
+
+    <!-- CUSTOMER ACCOUNT -->
+    <section id="account" class="hidden">
+      <h2>My Appointments</h2>
+      <h3>Upcoming Appointments / History</h3>
+      <div id="myBookings"></div>
+    </section>
+
+    <!-- ADMIN -->
+    <section id="admin" class="hidden">
+      <h2>Admin Dashboard</h2>
+      <h3>Reservation Calendar</h3>
+      <input type="date" id="adminDate" onchange="calendar()" />
+      <div id="calendarData"></div>
+
+      <h3>Manage All Appointments</h3>
+      <div id="allBookings"></div>
+
+      <h3>Block Unavailable Time</h3>
+      <input type="date" id="blockDate" />
+      <select id="blockTime">
+        <option>10:00 AM</option>
+        <option>11:00 AM</option>
+        <option>12:00 PM</option>
+        <option>02:00 PM</option>
+        <option>03:00 PM</option>
+        <option>04:00 PM</option>
+      </select>
+      <button onclick="blockSlot()">Block Time</button>
+      <p id="blockMsg"></p>
+    </section>
+
+    <!-- FEEDBACK -->
+    <section id="feedback" class="hidden">
+      <h2>Customer Feedback</h2>
+      <input id="feedbackName" placeholder="Your Name" /><br />
+      <select id="rating">
+        <option>5 Stars</option>
+        <option>4 Stars</option>
+        <option>3 Stars</option>
+        <option>2 Stars</option>
+        <option>1 Star</option></select
+      ><br />
+      <textarea id="comment" placeholder="Write your feedback"></textarea><br />
+      <button onclick="submitFeedback()">Submit Feedback</button>
+      <h3>Customer Reviews</h3>
+      <div id="reviews"></div>
+    </section>
+
+    <footer
+      style="
+        background: #702747;
+        color: white;
+        text-align: center;
+        padding: 15px;
+      "
+    >
+      <p>© 2026 Beauty Parlour | Online Appointment Booking</p>
+    </footer>
+
+    <script>
+      let bookings = [];
+      let blocked = [];
+      let feedbacks = [];
+      let currentUser = "";
+      let currentRole = "";
+
+      const prices = {
+        "Hair Styling": 500,
+        Facial: 800,
+        Manicure: 400,
+        Makeup: 1500,
+      };
+
+      function show(id) {
+        document
+          .querySelectorAll("section")
+          .forEach((s) => s.classList.add("hidden"));
+        document.getElementById(id).classList.remove("hidden");
+
+        if (id === "account") myBookings();
+        if (id === "admin") adminBookings();
+        if (id === "feedback") reviews();
+      }
+
+      function login() {
+        let u = document.getElementById("username").value;
+        let p = document.getElementById("password").value;
+        let r = document.getElementById("role").value;
+
+        if (!u || !p) {
+          alert("Enter login details");
+          return;
+        }
+
+        currentUser = u;
+        currentRole = r;
+
+        alert("Login successful!");
+
+        if (r === "admin") show("admin");
+        else show("services");
+      }
+
+      function register() {
+        let n = document.getElementById("regName").value;
+        let e = document.getElementById("regEmail").value;
+        let p = document.getElementById("regPass").value;
+
+        if (!n || !e || !p) {
+          alert("Fill all details");
+          return;
+        }
+
+        alert("Registration successful! Please login.");
+        show("login");
+      }
+
+      function book() {
+        let name = document.getElementById("customerName").value;
+        let phone = document.getElementById("phone").value;
+        let date = document.getElementById("date").value;
+        let time = document.getElementById("time").value;
+        let service = document.getElementById("service").value;
+        let stylist = document.getElementById("stylist").value;
+
+        if (!currentUser) {
+          alert("Please login first");
+          show("login");
+          return;
+        }
+
+        if (!name || !phone || !date) {
+          alert("Enter all required details");
+          return;
+        }
+
+        if (date < new Date().toLocaleDateString("en-CA")) {
+          alert("Select a valid date");
+          return;
+        }
+
+        let exists = bookings.some(
+          (b) =>
+            b.date === date &&
+            b.time === time &&
+            b.stylist === stylist &&
+            b.status !== "Cancelled",
+        );
+
+        let isBlocked = blocked.some(
+          (b) => b.date === date && b.time === time && b.stylist === stylist,
+        );
+
+        if (exists || isBlocked) {
+          alert("This time slot is unavailable");
+          return;
+        }
+
+        let payment = document.getElementById("payment").value;
+
+        let booking = {
+          id: Date.now(),
+          user: currentUser,
+          name,
+          phone,
+          date,
+          time,
+          service,
+          stylist,
+          price: prices[service],
+          payment,
+          status: "Confirmed",
+        };
+
+        bookings.push(booking);
+
+        document.getElementById("bookingMsg").innerText =
+          "Appointment booked! Booking ID: " + booking.id;
+      }
+
+      function myBookings() {
+        let list = bookings.filter((b) => b.user === currentUser);
+
+        document.getElementById("myBookings").innerHTML =
+          list
+            .map(
+              (b) => `
+<div>
+<p><b>${b.service}</b> - ₹${b.price}</p>
+<p>Date: ${b.date} | Time: ${b.time}</p>
+<p>Stylist: ${b.stylist}</p>
+<p>Status: ${b.status}</p>
+<button onclick="cancel(${b.id})">Cancel</button>
+<button onclick="reschedule(${b.id})">Reschedule</button>
+</div><hr>
+`,
+            )
+            .join("") || "No appointments found.";
+      }
+
+      function cancel(id) {
+        let b = bookings.find((x) => x.id === id);
+        if (b.user !== currentUser) return;
+        b.status = "Cancelled";
+        myBookings();
+      }
+
+      function reschedule(id) {
+        let b = bookings.find((x) => x.id === id);
+        if (b.user !== currentUser) return;
+
+        let date = prompt("Enter new date (YYYY-MM-DD):");
+        let time = prompt("Enter new time (e.g. 10:00 AM):");
+
+        if (!date || !time) return;
+
+        let exists = bookings.some(
+          (x) =>
+            x.id !== id &&
+            x.date === date &&
+            x.time === time &&
+            x.stylist === b.stylist &&
+            x.status !== "Cancelled",
+        );
+
+        let unavailable = blocked.some(
+          (x) => x.date === date && x.time === time && x.stylist === b.stylist,
+        );
+
+        if (exists || unavailable) {
+          alert("Time slot unavailable");
+          return;
+        }
+
+        b.date = date;
+        b.time = time;
+        b.status = "Confirmed";
+        myBookings();
+      }
+
+      function adminBookings() {
+        document.getElementById("allBookings").innerHTML =
+          bookings
+            .map(
+              (b) => `
+<div>
+<p><b>${b.name}</b> - ${b.service}</p>
+<p>${b.date} | ${b.time} | ${b.stylist}</p>
+<p>Phone: ${b.phone}</p>
+<p>Payment: ${b.payment} | ₹${b.price}</p>
+<p>Status: ${b.status}</p>
+<button onclick="updateStatus(${b.id})">Update Status</button>
+</div><hr>
+`,
+            )
+            .join("") || "No reservations yet.";
+      }
+
+      function updateStatus(id) {
+        let b = bookings.find((x) => x.id === id);
+        let s = prompt("Enter status: Confirmed / Completed / Cancelled");
+        if (!s) return;
+        if (!["Confirmed", "Completed", "Cancelled"].includes(s)) {
+          alert("Invalid status");
+          return;
+        }
+        b.status = s;
+        adminBookings();
+      }
+
+      function blockSlot() {
+        let date = document.getElementById("blockDate").value;
+        let time = document.getElementById("blockTime").value;
+
+        if (!date) {
+          alert("Select date");
+          return;
+        }
+
+        let stylist = prompt("Enter stylist name: Priya, Divya or Meena");
+        if (!["Priya", "Divya", "Meena"].includes(stylist)) {
+          alert("Invalid stylist");
+          return;
+        }
+
+        blocked.push({ date, time, stylist });
+        document.getElementById("blockMsg").innerText =
+          "Time slot blocked successfully!";
+      }
+
+      function calendar() {
+        let date = document.getElementById("adminDate").value;
+
+        let list = bookings.filter((b) => b.date === date);
+
+        document.getElementById("calendarData").innerHTML =
+          list
+            .map(
+              (b) => `
+<p>${b.time} - ${b.name} - ${b.service} (${b.status})</p>
+`,
+            )
+            .join("") || "No appointments on this date.";
+      }
+
+      function submitFeedback() {
+        let name = document.getElementById("feedbackName").value;
+        let comment = document.getElementById("comment").value;
+        let rating = document.getElementById("rating").value;
+
+        if (!name || !comment) {
+          alert("Enter feedback");
+          return;
+        }
+
+        feedbacks.push({ name, comment, rating });
+        reviews();
+        alert("Feedback submitted!");
+      }
+
+      function reviews() {
+        document.getElementById("reviews").innerHTML =
+          feedbacks
+            .map(
+              (f) => `
+<p><b>${f.name}</b> - ${f.rating}</p>
+<p>${f.comment}</p><hr>
+`,
+            )
+            .join("") || "No reviews yet.";
+      }
+
+      show("login");
+    </script>
+  </body>
+</html>

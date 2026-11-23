@@ -1,0 +1,122 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Train Reservation System</title>
+    <style>
+      body {
+        font-family: Arial;
+        background: #eaf2f8;
+        margin: 0;
+        text-align: center;
+      }
+      header {
+        background: #154360;
+        color: white;
+        padding: 15px;
+      }
+      section {
+        background: white;
+        margin: 20px auto;
+        padding: 20px;
+        max-width: 600px;
+        border-radius: 10px;
+      }
+      input,
+      select,
+      button {
+        padding: 10px;
+        margin: 6px;
+      }
+      button {
+        background: #2874a6;
+        color: white;
+        border: 0;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <header><h1>Indian Train Reservation</h1></header>
+
+    <section id="login">
+      <h2>Passenger Login</h2>
+      <input id="user" placeholder="Username" /><br />
+      <input id="pass" type="password" placeholder="Password" /><br />
+      <button onclick="login()">Login</button>
+    </section>
+
+    <section id="dashboard" style="display: none">
+      <h2>Search Trains</h2>
+      <input id="from" placeholder="Origin Station" />
+      <input id="to" placeholder="Destination Station" /><br />
+      <input id="date" type="date" /><br />
+      <select id="classType">
+        <option>Sleeper</option>
+        <option>AC 3 Tier</option>
+        <option>AC 2 Tier</option></select
+      ><br />
+      <button onclick="searchTrain()">Search Trains</button>
+      <div id="results"></div>
+      <hr />
+      <h2>Check PNR Status</h2>
+      <input id="pnr" placeholder="Enter PNR number" />
+      <button onclick="checkPNR()">Check</button>
+      <p id="status"></p>
+      <hr />
+      <h2>Cancel Ticket</h2>
+      <input id="cancelPnr" placeholder="Enter PNR number" />
+      <button onclick="cancelTicket()">Cancel</button>
+      <p id="cancelMsg"></p>
+    </section>
+
+    <section id="admin">
+      <h2>Admin Panel (Demo)</h2>
+      <p>Manage train schedules, fares and seat availability.</p>
+      <button onclick="alert('Admin: Manage trains and bookings')">
+        Manage Trains
+      </button>
+    </section>
+
+    <script>
+      let bookingPNR = "";
+
+      function login() {
+        if (user.value && pass.value) {
+          document.getElementById("login").style.display = "none";
+          document.getElementById("dashboard").style.display = "block";
+        } else alert("Enter username and password");
+      }
+
+      function searchTrain() {
+        if (!from.value || !to.value || !date.value) {
+          alert("Enter route and journey date");
+          return;
+        }
+        results.innerHTML =
+          "<h3>Available Trains</h3>" +
+          "<p>Express Train | Seats: 45 | Fare: ₹500</p>" +
+          "<button onclick='book()'>Book Ticket</button>";
+      }
+
+      function book() {
+        bookingPNR = Math.floor(1000000000 + Math.random() * 9000000000);
+        results.innerHTML +=
+          "<p>Booking successful! PNR: " +
+          bookingPNR +
+          "</p><p>Demo only: payment not processed.</p>";
+      }
+
+      function checkPNR() {
+        status.innerText =
+          pnr.value && pnr.value == bookingPNR ? "Confirmed" : "PNR not found";
+      }
+
+      function cancelTicket() {
+        cancelMsg.innerText =
+          cancelPnr.value && cancelPnr.value == bookingPNR
+            ? "Ticket cancelled. Refund processing is not implemented."
+            : "PNR not found";
+      }
+    </script>
+  </body>
+</html>

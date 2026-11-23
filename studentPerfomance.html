@@ -1,0 +1,59 @@
+<html>
+  <body>
+    <div id="l">
+      <h1>Login</h1>
+      <input id="u" placeholder="Username" /><br /><br />
+      <input id="p" type="password" placeholder="Password" /><br /><br />
+      <button onclick="go()">Login</button>
+    </div>
+    <div id="c" style="display: none">
+      <h1>Student Marks Details</h1>
+      <table border="1" cellpadding="8">
+        <tr>
+          <th>Reg No</th>
+          <th>Name</th>
+          <th>Department</th>
+          <th>Marks</th>
+        </tr>
+        <tr>
+          <td>101</td>
+          <td>Arun</td>
+          <td>AIDS</td>
+          <td>85</td>
+        </tr>
+        <tr>
+          <td>102</td>
+          <td>Priya</td>
+          <td>CSE</td>
+          <td>90</td>
+        </tr>
+        <tr>
+          <td>103</td>
+          <td>Rahul</td>
+          <td>IT</td>
+          <td>80</td>
+        </tr>
+        <tr>
+          <td>104</td>
+          <td>Divya</td>
+          <td>AIDS</td>
+          <td>95</td>
+        </tr>
+        <tr>
+          <td>105</td>
+          <td>Kumar</td>
+          <td>ECE</td>
+          <td>88</td>
+        </tr>
+      </table>
+    </div>
+    <script>
+      function go() {
+        if (u.value && p.value) {
+          l.style.display = "none";
+          c.style.display = "block";
+        } else alert("Enter username and password");
+      }
+    </script>
+  </body>
+</html>

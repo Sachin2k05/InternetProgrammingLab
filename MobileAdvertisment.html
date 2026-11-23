@@ -1,0 +1,29 @@
+<html>
+  <body style="font-family: Arial; text-align: center; background: lightblue">
+    <div id="l">
+      <h1>Login</h1>
+      <input id="u" placeholder="Username" /><br /><br />
+      <input id="p" type="password" placeholder="Password" /><br /><br />
+      <button onclick="go()">Login</button>
+    </div>
+    <div id="c" style="display: none">
+      <h1>Samsung Galaxy S25 Ultra</h1>
+      <img
+        src="https://images.samsung.com/is/image/samsung/p6pim/in/2501/gallery/in-galaxy-s25-ultra-s938-sm-s938bztqins-thumb-544563266"
+        width="150"
+      />
+      <h2>Price: ₹1,29,999 (example)</h2>
+      <p>200MP camera, AMOLED display and S Pen.</p>
+      <p>A premium phone for photography and gaming.</p>
+      <a href="https://www.samsung.com/in/">Samsung Website</a>
+    </div>
+    <script>
+      function go() {
+        if (u.value && p.value) {
+          l.style.display = "none";
+          c.style.display = "block";
+        } else alert("Enter username and password");
+      }
+    </script>
+  </body>
+</html>

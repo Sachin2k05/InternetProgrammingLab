@@ -1,0 +1,31 @@
+<html>
+  <body>
+    <div id="l">
+      <h1>Login</h1>
+      <input id="u" placeholder="Username" /><br /><br />
+      <input id="p" type="password" placeholder="Password" /><br /><br />
+      <button onclick="go()">Login</button>
+    </div>
+    <div id="c" style="display: none">
+      <h1>World Travel Guide</h1>
+      <h2>Asia - India</h2>
+      <img
+        src="https://images.unsplash.com/photo-1564507592333-c60657eea523"
+        width="150"
+      />
+      <p>India is famous for its culture and monuments.</p>
+      <a href="https://www.incredibleindia.gov.in">Visit India</a>
+      <h2>Europe - France</h2>
+      <p>France is famous for the Eiffel Tower.</p>
+      <a href="https://www.france.fr">Visit France</a>
+    </div>
+    <script>
+      function go() {
+        if (u.value && p.value) {
+          l.style.display = "none";
+          c.style.display = "block";
+        } else alert("Enter username and password");
+      }
+    </script>
+  </body>
+</html>

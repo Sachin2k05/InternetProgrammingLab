@@ -1,0 +1,35 @@
+<html>
+  <body>
+    <div id="l">
+      <h1>Login</h1>
+      <input id="u" placeholder="Username" /><br /><br />
+      <input id="p" type="password" placeholder="Password" /><br /><br />
+      <button onclick="go()">Login</button>
+    </div>
+    <div id="c" style="display: none">
+      <h1>Spice Restaurant</h1>
+      <h2>Starters</h2>
+      <ul>
+        <li>Soup - Fresh tomato soup</li>
+        <li>Fries - Crispy potatoes</li>
+      </ul>
+      <h2>Main Course</h2>
+      <ol>
+        <li>Biryani - Spicy chicken rice</li>
+        <li>Dosa - Crispy rice pancake</li>
+      </ol>
+      <h2>Desserts</h2>
+      <ul>
+        <li>Ice Cream - Sweet frozen dessert</li>
+      </ul>
+    </div>
+    <script>
+      function go() {
+        if (u.value && p.value) {
+          l.style.display = "none";
+          c.style.display = "block";
+        } else alert("Enter username and password");
+      }
+    </script>
+  </body>
+</html>
