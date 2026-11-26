@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Campus Library | Library Management System</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="index.html"><span class="brand-mark">📚</span><span>Campus<span class="brand-accent">Library</span><small>Library Management System</small></span></a>
+    <nav>
+      <a href="#catalog">Catalog</a><a href="#materials">Study Materials</a><a href="#contact">Contact</a>
+      <button class="btn btn-outline" id="loginNav">Login</button>
+      <button class="btn btn-primary" id="registerNav">Register</button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <span class="eyebrow">YOUR KNOWLEDGE HUB</span>
+        <h1>Discover your next<br><span>great read.</span></h1>
+        <p>Search books, track your borrowing history, and access course materials — all in one place.</p>
+        <div class="hero-actions"><a class="btn btn-primary btn-lg" href="#catalog">Explore catalog →</a><button class="btn btn-light btn-lg" id="heroLogin">Student login</button></div>
+        <div class="hero-stats"><div><strong id="statBooks">0</strong><span>Books listed</span></div><div><strong id="statMaterials">0</strong><span>Study resources</span></div><div><strong>24/7</strong><span>Online access</span></div></div>
+      </div>
+      <div class="hero-art" aria-label="Books illustration"><div class="sun"></div><div class="book-stack book-one"></div><div class="book-stack book-two"></div><div class="book-stack book-three"></div><div class="plant">🌿</div><div class="art-note">Read. Learn. Grow.</div></div>
+    </section>
+
+    <section class="section" id="catalog">
+      <div class="section-heading"><div><span class="eyebrow">THE COLLECTION</span><h2>Find your next book</h2><p>Browse available titles and explore the details.</p></div><span class="pill" id="bookCount">0 books</span></div>
+      <div class="search-panel">
+        <label class="search-box"><span>⌕</span><input id="bookSearch" type="search" placeholder="Search title, author, category or ISBN..."></label>
+        <select id="categoryFilter" aria-label="Filter by category"><option value="">All categories</option></select>
+        <select id="availabilityFilter" aria-label="Filter by availability"><option value="">Any status</option><option value="Available">Available</option><option value="Issued">Issued</option></select>
+      </div>
+      <div class="book-grid" id="bookGrid"></div>
+      <p class="empty-state hidden" id="noBooks">No books match your search.</p>
+    </section>
+
+    <section class="materials-section" id="materials">
+      <div class="section-heading"><div><span class="eyebrow">LEARNING RESOURCES</span><h2>Study materials</h2><p>Find resources by academic year and semester.</p></div></div>
+      <div class="material-filters"><select id="yearFilter"><option value="">All years</option><option>1</option><option>2</option><option>3</option><option>4</option></select><select id="semesterFilter"><option value="">All semesters</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option></select></div>
+      <div class="material-grid" id="materialGrid"></div>
+    </section>
+
+    <section class="contact-section" id="contact">
+      <div><span class="eyebrow">WE'RE HERE TO HELP</span><h2>Contact the library</h2><p>Have a question about a book, a fine, or a resource? Send us a message.</p><p class="contact-detail">✉ library@campus.example</p><p class="contact-detail">◷ Monday – Saturday · 9:00 AM – 6:00 PM</p></div>
+      <form id="contactForm" class="contact-form"><label>Your name<input name="name" required placeholder="Enter your name"></label><label>Email address<input name="email" type="email" required placeholder="you@example.com"></label><label>Message<textarea name="message" rows="4" required placeholder="How can we help?"></textarea></label><button class="btn btn-primary" type="submit">Send message →</button></form>
+    </section>
+  </main>
+  <footer><a class="brand footer-brand" href="#">📚 Campus<span class="brand-accent">Library</span></a><span>Library Management System · Student learning, made simpler.</span><span>© <span id="yearNow"></span> Campus Library</span></footer>
+
+  <div class="modal-backdrop hidden" id="authModal"><section class="modal" role="dialog" aria-modal="true" aria-labelledby="authTitle"><button class="modal-close" id="closeAuth" aria-label="Close">×</button><div class="modal-icon">📚</div><span class="eyebrow">WELCOME TO CAMPUS LIBRARY</span><h2 id="authTitle">Login to your account</h2><p class="muted" id="authSubtitle">Access your books and study materials.</p>
+    <div class="auth-tabs"><button class="auth-tab active" data-mode="login">Login</button><button class="auth-tab" data-mode="register">Register</button></div>
+    <form id="authForm"><label id="nameField" class="hidden">Full name<input id="authName" autocomplete="name" placeholder="Your full name"></label><label>Email address<input id="authEmail" type="email" required autocomplete="email" placeholder="student@example.com"></label><label>Password<input id="authPassword" type="password" required minlength="4" autocomplete="current-password" placeholder="Enter password"></label><label id="roleField">Login as<select id="authRole"><option value="student">Student</option><option value="admin">Librarian admin</option></select></label><button class="btn btn-primary full-width" type="submit" id="authSubmit">Login →</button></form>
+    <p class="demo-note"><strong>Demo admin:</strong> admin@library.demo / admin123</p><p class="demo-note">Demo only — accounts are stored in this browser, not securely on a server.</p>
+  </section></div>
+  <div class="modal-backdrop hidden" id="bookModal"><section class="modal book-detail-modal" role="dialog" aria-modal="true"><button class="modal-close" id="closeBook" aria-label="Close">×</button><div id="bookDetailContent"></div></section></div>
+  <div id="toast" class="toast" role="status"></div>
+  <script src="app.js"></script>
+</body>
+</html>
